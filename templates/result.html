@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block content %}
+<h2>Scan #{{ scan.id }}</h2>
+<div class="card"><table>
+<tr><th>Target</th><td>{{ scan.target_url }}</td></tr><tr><th>Status</th><td>{{ scan.status }}</td></tr>
+<tr><th>Started</th><td>{{ scan.started_at }}</td></tr><tr><th>Completed</th><td>{{ scan.completed_at }}</td></tr>
+<tr><th>Total findings</th><td>{{ scan.total_findings }}</td></tr>
+<tr><th>Risk summary</th><td><span class="badge {{ (scan.risk_summary or 'none')|lower }}">{{ scan.risk_summary }}</span> <small>(rule-based, not CVSS)</small></td></tr>
+{% if scan.error %}<tr><th>Error</th><td>{{ scan.error }}</td></tr>{% endif %}</table><br>
+<a class="btn" href="{{ url_for('export_csv', scan_id=scan.id) }}">Download CSV</a>
+<a class="btn" href="{{ url_for('export_pdf', scan_id=scan.id) }}">Download PDF</a></div>
+<div class="card"><h3>Severity summary</h3>{% for s in SEVERITY_ORDER %}<span class="badge {{ s|lower }}">{{ s }}: {{ counts[s] }}</span> {% endfor %}</div>
+<div class="card"><h3>Checks &amp; findings</h3>
+<table><tr><th>Severity</th><th>Status</th><th>Title</th><th>Category</th></tr>
+{% for f in findings %}<tr><td><span class="badge {{ f.severity|lower }}">{{ f.severity }}</span></td>
+<td><span class="badge {{ f.status|lower }}">{{ f.status }}</span></td>
+<td><a href="{{ url_for('finding_detail', scan_id=scan.id, finding_id=f.id) }}">{{ f.title }}</a></td><td>{{ f.category }}</td></tr>{% endfor %}</table></div>
+<div class="card"><h3>Limitations</h3><ul>{% for l in LIMITATIONS %}<li>{{ l }}</li>{% endfor %}</ul></div>
+{% endblock %}

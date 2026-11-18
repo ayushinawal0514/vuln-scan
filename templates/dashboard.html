@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block content %}
+<h2>Dashboard</h2>
+<div class="stats">
+<div class="card stat"><b>{{ total_scans }}</b>Total scans</div>
+{% for s in SEVERITY_ORDER %}<div class="card stat"><b>{{ counts[s] }}</b><span class="badge {{ s|lower }}">{{ s }}</span></div>{% endfor %}
+</div>
+<div class="card"><h3>Recent scans</h3>
+{% if recent %}<table><tr><th>ID</th><th>Target</th><th>Started</th><th>Status</th><th>Findings</th><th>Risk (rule-based)</th></tr>
+{% for s in recent %}<tr><td><a href="{{ url_for('scan_result', scan_id=s.id) }}">#{{ s.id }}</a></td><td>{{ s.target_url }}</td><td>{{ s.started_at }}</td>
+<td>{{ s.status }}</td><td>{{ s.total_findings }}</td><td><span class="badge {{ (s.risk_summary or 'none')|lower }}">{{ s.risk_summary }}</span></td></tr>{% endfor %}</table>
+{% else %}<p>No scans yet. <a href="{{ url_for('new_scan') }}">Start your first scan</a>.</p>{% endif %}</div>
+{% endblock %}

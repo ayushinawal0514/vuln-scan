@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<h2>New Scan</h2>
+<div class="card">
+<div class="warn"><b>Authorization reminder:</b> only scan systems you own or have explicit written permission to test.
+Approved hosts: <code>{{ allowed|join(', ') }}</code></div><br>
+<form method="post" id="scanForm">
+<label>Target URL</label><br>
+<input type="text" name="url" value="{{ url }}" placeholder="http://127.0.0.1:5001/insecure" required><br><br>
+<label><input type="checkbox" id="authorized" name="authorized"> I confirm I am authorized to scan this target.</label><br><br>
+<button id="scanBtn" type="submit">Start scan</button></form></div>
+{% endblock %}

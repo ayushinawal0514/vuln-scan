@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<p><a href="{{ url_for('scan_result', scan_id=scan.id) }}">&larr; Back to scan #{{ scan.id }}</a></p>
+<div class="card"><h2>{{ f.title }}</h2>
+<span class="badge {{ f.severity|lower }}">{{ f.severity }}</span> <span class="badge {{ f.status|lower }}">{{ f.status }}</span> <small>{{ f.category }} / {{ f.check_name }}</small>
+<h4>Evidence</h4><p><code>{{ f.evidence }}</code></p>
+<h4>Potential impact</h4><p>{{ f.explanation }}</p>
+<h4>Recommendation</h4><p>{{ f.recommendation }}</p>
+<h4>Why this severity?</h4><p>{{ f.rule_reason }}</p></div>
+{% endblock %}

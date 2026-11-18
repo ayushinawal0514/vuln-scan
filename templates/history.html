@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block content %}
+<h2>Scan History</h2><div class="card">
+{% if scans %}<table><tr><th>ID</th><th>Target</th><th>Started</th><th>Status</th><th>Findings</th><th>Risk</th><th>Export</th></tr>
+{% for s in scans %}<tr><td><a href="{{ url_for('scan_result', scan_id=s.id) }}">#{{ s.id }}</a></td><td>{{ s.target_url }}</td><td>{{ s.started_at }}</td>
+<td>{{ s.status }}</td><td>{{ s.total_findings }}</td><td><span class="badge {{ (s.risk_summary or 'none')|lower }}">{{ s.risk_summary }}</span></td>
+<td><a href="{{ url_for('export_csv', scan_id=s.id) }}">CSV</a> | <a href="{{ url_for('export_pdf', scan_id=s.id) }}">PDF</a></td></tr>{% endfor %}</table>
+{% else %}<p>No scans yet.</p>{% endif %}</div>
+{% endblock %}

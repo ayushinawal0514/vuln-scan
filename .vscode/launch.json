@@ -1,0 +1,10 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {"name": "Scanner App (port 5000)", "type": "debugpy", "request": "launch", "program": "${workspaceFolder}/app.py", "console": "integratedTerminal"},
+    {"name": "Lab Test Target (port 5001)", "type": "debugpy", "request": "launch", "program": "${workspaceFolder}/test_server.py", "console": "integratedTerminal"}
+  ],
+  "compounds": [
+    {"name": "Run Scanner + Lab Target", "configurations": ["Scanner App (port 5000)", "Lab Test Target (port 5001)"]}
+  ]
+}
